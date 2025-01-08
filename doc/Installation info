@@ -1,7 +1,6 @@
 MindEM Documentation
 MindEM is a powerful Python framework for training and deploying autonomous AI agents through adversarial evolutionary reinforcement learning. It enables continuous self-improvement through evolutionary algorithms and robust testing mechanisms.
 
-.. toctree:: :maxdepth: 2 :caption: Contents:
 
 installation quickstart components/index examples/index api/index contributing
 
