@@ -1,0 +1,129 @@
+MindEM Documentation
+MindEM is a powerful Python framework for training and deploying autonomous AI agents through adversarial evolutionary reinforcement learning. It enables continuous self-improvement through evolutionary algorithms and robust testing mechanisms.
+
+.. toctree:: :maxdepth: 2 :caption: Contents:
+
+installation quickstart components/index examples/index api/index contributing
+
+Installation
+Install MindEM using pip:
+
+bash
+Copy code
+# Basic installation
+pip install mindem
+
+# With LLaMA support
+pip install mindem[llama]
+
+# With all features (LLaMA, DeFi tools)
+pip install mindem[all]
+For development installation:
+
+bash
+Copy code
+git clone https://github.com/MindEM/mindem.git
+cd mindem
+pip install -e ".[dev]"
+Quick Start
+Here's a simple example of using MindEM with Solana DeFi analysis:
+
+python
+Copy code
+from mindem import Agent, Evolution, Judge, AdversarialTester
+from mindem.judge import JudgingCriteria
+
+# Initialize components
+agent = Agent(
+    model="gpt-4o-mini",
+    config={
+        "temperature": 0.7,
+        "max_tokens": 500
+    }
+)
+
+evolution = Evolution(
+    population_size=10,
+    generations=50,
+    mutation_rate=0.2,
+    domain="defi"
+)
+
+judge = Judge(
+    model="gpt-4o-mini",
+    criteria=JudgingCriteria(
+        correctness=1.0,
+        efficiency=0.8,
+        completeness=0.9
+    )
+)
+
+tester = AdversarialTester(
+    difficulty="medium",
+    domain="defi"
+)
+
+# Train the agent
+evolved_agent = evolution.train(
+    agent=agent,
+    task="Analyze Solana DeFi opportunities",
+    judge=judge,
+    tester=tester
+)
+
+# Use the evolved agent
+response = evolved_agent.run(
+    task="Analyze Raydium pool metrics",
+    context="""
+    Pool: SOL-USDC
+    TVL: $200M
+    Daily volume: $25M
+    Current APY: 4.5% + RAY rewards
+    Transaction fee: 0.000005 SOL
+    """
+)
+Key Features
+ Evolutionary Learning: Automated prompt and configuration optimization
+ Multi-Domain Support: Specialized components for math, code, and DeFi domains
+ Adversarial Testing: Generate challenging test cases to ensure robustness
+ State Management: Save and load evolved models and their states
+ Multiple Model Support: Use OpenAI's GPT models or run LLaMA locally
+ Self-Improvement Loop: Continuous evolution without human intervention
+ Performance Metrics: Data-driven validation of improvements
+
+Components
+MindEM consists of four main components:
+
+Evolution Controller: Manages population evolution and selection
+
+Configurable evolution parameters
+Performance-based selection strategies
+Judge: Multi-criteria evaluation system
+
+Domain-specific judging strategies
+Customizable scoring weights
+Agent: Flexible LLM backend integration (GPT-4o-mini, LLaMA)
+
+State management and checkpointing
+Configurable inference parameters
+Adversarial Tester: Dynamic test case generation
+
+Domain-specific testing strategies
+Difficulty level adjustment
+Model Support
+MindEM supports multiple LLM backends:
+
+OpenAI Models - Set up with API key:
+bash
+Copy code
+export OPENAI_API_KEY=your_api_key
+Supported models: gpt-4o-mini (default)
+
+Local LLaMA - Run models locally with PyTorch
+Custom model path configuration
+CPU/GPU support
+Contributing
+We welcome contributions! Please check our Contributing Guidelines for details.
+
+License
+This project is licensed under the MIT License - see the LICENSE file for details.
