@@ -1,0 +1,255 @@
+original_data = [
+    {
+        "domain": "math",
+        "task": "Find the integral of f(x) = 2x + 3",
+        "context": "Show the steps and include the constant of integration.",
+        "ground_truth": "∫(2x + 3)dx = x² + 3x + C",
+        "difficulty": "easy"
+    },
+    {
+        "domain": "math",
+        "task": "Solve the system: ln(x) + y = 2, x + e^y = 5",
+        "context": "Use substitution and show all steps.",
+        "ground_truth": """1. From first equation: y = 2 - ln(x)
+2. Substitute into second: x + e^(2-ln(x)) = 5
+3. Simplify: x + e²/x = 5
+4. Multiply by x: x² + e² = 5x
+5. Rearrange: x² - 5x + e² = 0
+6. Use quadratic formula
+7. x ≈ 4.13
+8. y ≈ 0.58""",
+        "difficulty": "hard"
+    },
+    {
+        "domain": "code",
+        "task": "Implement a function to find the longest increasing subsequence",
+        "context": "Use dynamic programming and include type hints.",
+        "ground_truth": """def longest_increasing_subsequence(arr: List[int]) -> List[int]:
+    \"\"\"Find longest increasing subsequence in array.
+    Args:
+        arr: Input array
+    Returns:
+        List[int]: Longest increasing subsequence
+    \"\"\"
+    if not arr:
+        return []
+    
+    n = len(arr)
+    dp = [1] * n  # Length of LIS ending at i
+    prev = [-1] * n  # Previous index in LIS
+    
+    # Find lengths and track previous indices
+    for i in range(n):
+        for j in range(i):
+            if arr[i] > arr[j] and dp[j] + 1 > dp[i]:
+                dp[i] = dp[j] + 1
+                prev[i] = j
+    
+    # Reconstruct sequence
+    max_len = max(dp)
+    curr = dp.index(max_len)
+    result = []
+    
+    while curr != -1:
+        result.append(arr[curr])
+        curr = prev[curr]
+    
+    return result[::-1]""",
+        "difficulty": "hard"
+    },
+    {
+        "domain": "defi",
+        "task": "Calculate optimal swap amounts for triangular arbitrage",
+        "context": "Given pools: ETH/USDC, ETH/DAI, USDC/DAI",
+        "ground_truth": """1. Get pool reserves and prices
+2. Calculate cross-rates:
+   - ETH/USDC: 1 ETH = 2000 USDC
+   - ETH/DAI: 1 ETH = 2010 DAI
+   - USDC/DAI: 1 USDC = 1.002 DAI
+3. Identify arbitrage path:
+   ETH -> USDC -> DAI -> ETH
+4. Calculate optimal input:
+   x = sqrt((R1*R2*R3)/(P1*P2*P3)) - R1
+   where R = reserves, P = prices
+5. Expected profit = 0.3 ETH""",
+        "difficulty": "hard"
+    },
+    {
+        "domain": "code",
+        "task": "Write a function to detect and remove cycles in a linked list",
+        "context": "Include type hints and handle edge cases.",
+        "ground_truth": """class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+def remove_cycle(head: Optional[ListNode]) -> Optional[ListNode]:
+    \"\"\"Detect and remove cycle in linked list.
+    Args:
+        head: Head of linked list
+    Returns:
+        Optional[ListNode]: Head of cycle-free list
+    \"\"\"
+    if not head or not head.next:
+        return head
+    
+    # Detect cycle using Floyd's algorithm
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow == fast:
+            break
+    else:
+        return head  # No cycle found
+    
+    # Find cycle start
+    slow = head
+    while slow.next != fast.next:
+        slow = slow.next
+        fast = fast.next
+    
+    # Remove cycle
+    fast.next = None
+    return head""",
+        "difficulty": "hard"
+    }
+]
+
+# Modified Data (if any changes made in the example)
+modified_data = json.loads('''[
+    {
+        "domain": "math",
+        "task": "Find the integral of f(x) = 2x + 3",
+        "context": "Show the steps and include the constant of integration.",
+        "ground_truth": "∫(2x + 3)dx = x² + 3x + C",
+        "difficulty": "easy"
+    },
+    {
+        "domain": "math",
+        "task": "Solve the system: ln(x) + y = 2, x + e^y = 5",
+        "context": "Use substitution and show all steps.",
+        "ground_truth": """1. From first equation: y = 2 - ln(x)
+2. Substitute into second: x + e^(2-ln(x)) = 5
+3. Simplify: x + e²/x = 5
+4. Multiply by x: x² + e² = 5x
+5. Rearrange: x² - 5x + e² = 0
+6. Use quadratic formula
+7. x ≈ 4.13
+8. y ≈ 0.58""",
+        "difficulty": "hard"
+    },
+    {
+        "domain": "code",
+        "task": "Implement a function to find the longest increasing subsequence",
+        "context": "Use dynamic programming and include type hints.",
+        "ground_truth": """def longest_increasing_subsequence(arr: List[int]) -> List[int]:
+    \"\"\"Find longest increasing subsequence in array.
+    Args:
+        arr: Input array
+    Returns:
+        List[int]: Longest increasing subsequence
+    \"\"\"
+    if not arr:
+        return []
+    
+    n = len(arr)
+    dp = [1] * n  # Length of LIS ending at i
+    prev = [-1] * n  # Previous index in LIS
+    
+    # Find lengths and track previous indices
+    for i in range(n):
+        for j in range(i):
+            if arr[i] > arr[j] and dp[j] + 1 > dp[i]:
+                dp[i] = dp[j] + 1
+                prev[i] = j
+    
+    # Reconstruct sequence
+    max_len = max(dp)
+    curr = dp.index(max_len)
+    result = []
+    
+    while curr != -1:
+        result.append(arr[curr])
+        curr = prev[curr]
+    
+    return result[::-1]""",
+        "difficulty": "hard"
+    },
+    {
+        "domain": "defi",
+        "task": "Calculate optimal swap amounts for triangular arbitrage",
+        "context": "Given pools: ETH/USDC, ETH/DAI, USDC/DAI",
+        "ground_truth": """1. Get pool reserves and prices
+2. Calculate cross-rates:
+   - ETH/USDC: 1 ETH = 2000 USDC
+   - ETH/DAI: 1 ETH = 2010 DAI
+   - USDC/DAI: 1 USDC = 1.002 DAI
+3. Identify arbitrage path:
+   ETH -> USDC -> DAI -> ETH
+4. Calculate optimal input:
+   x = sqrt((R1*R2*R3)/(P1*P2*P3)) - R1
+   where R = reserves, P = prices
+5. Expected profit = 0.3 ETH""",
+        "difficulty": "hard"
+    },
+    {
+        "domain": "code",
+        "task": "Write a function to detect and remove cycles in a linked list",
+        "context": "Include type hints and handle edge cases.",
+        "ground_truth": """class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+def remove_cycle(head: Optional[ListNode]) -> Optional[ListNode]:
+    \"\"\"Detect and remove cycle in linked list.
+    Args:
+        head: Head of linked list
+    Returns:
+        Optional[ListNode]: Head of cycle-free list
+    \"\"\"
+    if not head or not head.next:
+        return head
+    
+    # Detect cycle using Floyd's algorithm
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow == fast:
+            break
+    else:
+        return head  # No cycle found
+    
+    # Find cycle start
+    slow = head
+    while slow.next != fast.next:
+        slow = slow.next
+        fast = fast.next
+    
+    # Remove cycle
+    fast.next = None
+    return head""",
+        "difficulty": "hard"
+    }
+]''')
+
+# Compare and create diffs
+def generate_diff(original, modified):
+    diff = {}
+    for idx, (orig, mod) in enumerate(zip(original, modified)):
+        task_diff = {}
+        for key in orig:
+            if orig[key] != mod[key]:
+                task_diff[key] = {
+                    "original": orig[key],
+                    "modified": mod[key]
+                }
+        if task_diff:
+            diff[f"example_{idx+1}"] = task_diff
+    return diff
+
+# Generate and print the diff
+diff_result = generate_diff(original_data, modified_data)
+print(json.dumps(diff_result, indent=2))
